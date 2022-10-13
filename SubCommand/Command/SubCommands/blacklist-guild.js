@@ -13,35 +13,20 @@ module.exports = {
     const ID = options.getString("guild-id");
     const reason = options.getString("reason") || "None Reason Provided.";
     if (isNaN(ID))
-      return interaction.editReply({
-        content: `ID is supposed to be a number`,
-      });
-    const Guild = client.guilds.cache.get(ID);
-    let GName;
-    let GID;
-    if (Guild) {
-      GName = Guild.name;
-      GID = Guild.id;
-    } else {
-      GName = "Unknown";
-      GID = ID;
-    }
-    let Data = await BlackListGuild.findOne({ Guild: GID }).catch((err) => {});
+      return interaction.editReply({content: `ID is supposed to be a number`,});
+    const Guild = await client.guilds.fetch(ID);
+    let Data = await BlackListGuild.findOne({ Guild: Guild.id }).catch((err) => { });
     if (!Data) {
-      Data = new BlackListGuild({
-        Guild: GID,
-        Reason: reason,
-        Time: Date.now(),
-      });
+      Data = new BlackListGuild({ Guild: Guild.id, Reason: reason, Time: Date.now() });
       await Data.save();
       interaction.editReply({
-        content: `Successfully added **${GName} || ${GID}** in blacklisted server , for the Reason: ${reason}`,
-      });
+        content: `Successfully added **${Guild.name} || ${Guild.id}** in blacklisted server , for the Reason: ${reason}`,});
     } else {
-        await Data.delete()
-        interaction.editReply({
-            content: `Successfully removed **${GName} || ${GID}** from blacklisted server`,
-          });
+      await Data.delete()
+      interaction.editReply({
+        content: `Successfully removed **${Guild.name} || ${Guild.id}** from blacklisted server`});
+  
     }
+   
   },
 };

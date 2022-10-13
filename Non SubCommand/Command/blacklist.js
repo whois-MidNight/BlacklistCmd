@@ -32,67 +32,41 @@ module.exports = {
     ),
   async execute(interaction, client) {
     await interaction.deferReply({ ephemeral: true });
-    const { user, options } = interaction;
+    const {  options } = interaction;
     const choices = options.getString("options");
     const ID = options.getString("id");
     const reason = options.getString("reason") || "None Reason Provided.";
     if (isNaN(ID))
       return interaction.editReply({content: `ID is supposed to be a number`,});
     switch (choices) {
-      case "guild":{
-
-        const Guild = client.guilds.cache.get(ID);
-        let GName;
-        let GID;
-        if (Guild) {
-          GName = Guild.name;
-          GID = Guild.id;
-        } else {
-          GName = "Unknown";
-          GID = ID;
-        }
-        let Data = await BlackListGuild.findOne({ Guild: GID }).catch((err) => {});
+      case "guild":{    
+       const Guild = await client.guilds.fetch(ID);
+        let Data = await BlackListGuild.findOne({ Guild: Guild.id }).catch((err) => { });
         if (!Data) {
-          Data = new BlackListGuild({
-            Guild: GID,
-            Reason: reason,
-            Time: Date.now(),
-          });
+          Data = new BlackListGuild({ Guild: Guild.id, Reason: reason, Time: Date.now() });
           await Data.save();
-          interaction.editReply({content: `Successfully added **${GName} || ${GID}** in blacklisted server , for the Reason: ${reason}`});
+          interaction.editReply({
+            content: `Successfully added **${Guild.name} || ${Guild.id}** in blacklisted server , for the Reason: ${reason}`,});
         } else {
-            await Data.delete()
-            interaction.editReply({content: `Successfully removed **${GName} || ${GID}** from blacklisted server`});
+          await Data.delete()
+          interaction.editReply({
+            content: `Successfully removed **${Guild.name} || ${Guild.id}** from blacklisted server`});
+      
         }
       }
         break;
       case "user":{
-        let Member;
-        let MName;
-        let MID;
-        const User = client.users.cache.get(ID);
-        if (User) {
-          Member = User;
-          MName = User.tag;
-          MID = User.id;
-        } else {
-          Member = "Unknown User #0000";
-          MName = "Unknow User #0000";
-          MID = ID;
-        }
-        let Data = await BlackListUser.findOne({ User: MID }).catch((err) => {
-          console.log(err);
-        });
+        const User = await client.users.fetch(ID);
+        let Data = await BlackListUser.findOne({ User: User.id }).catch((err) => { });
         if (!Data) {
-          Data = new BlackListUser({
-            User: MID,
-            Reason: reason,
-            Time: Date.now(),
-          });
+          Data = new BlackListUser({ User: User.id, Reason: reason, Time: Date.now() });
           await Data.save();
-          interaction.editReply({content: `Successfully added **${Member} | ${MName} | ${MID}** in blacklisted user , for the Reason: ${reason}`});
+          interaction.editReply({
+            content: `Successfully added **${User} | ${User.id} | ${User.username}** in blacklisted users , for the Reason: ${reason}`});
         } else {
-          await Data.delete();interaction.editReply({content: `Successfully removed **${Member} | ${MName} | ${MID}** fom blacklisted user `});
+          await Data.delete()
+          interaction.editReply({
+            content: `Successfully removed **${User} | ${User.id} | ${User.username}** from blacklisted server`});
         }
       }
         break;
