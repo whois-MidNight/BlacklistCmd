@@ -1,5 +1,4 @@
-![image](https://user-images.githubusercontent.com/94427416/195628477-3ff6e891-a56f-4d31-80fe-b587b2aaaa1f.png)
-
+![image](https://user-images.githubusercontent.com/94427416/195632134-a01f5265-a9de-40eb-b6d1-a432dcb20439.png)
 
 ## **BlackList Command v14**:
 The Command can BlackLists a user or a guild
