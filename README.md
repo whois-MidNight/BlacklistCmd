@@ -8,11 +8,12 @@ The Command can BlackLists a user or a guild
 
 
 ## **Instructions:**
-**The Event File Goes into your `interactionCreate.js`**
-**You are Using the SubCommand Handler Made By [Lyx](https://www.youtube.com/watch?v=F6ZqwH-zACk&t)**
+**The Event File Goes into your `interactionCreate.js`**  
+
+**If You are Using the SubCommand Handler Made By [Lyx](https://www.youtube.com/watch?v=F6ZqwH-zACk&t)**
 - Use The Sub Command Folder Code
 
-**You are not Using the SubCommand Handler Made By [Lyx](https://www.youtube.com/watch?v=F6ZqwH-zACk&t)**
+**If You are not Using the SubCommand Handler Made By [Lyx](https://www.youtube.com/watch?v=F6ZqwH-zACk&t)**
 - Use The Non Sub Command Folder Code
  
 
