@@ -22,7 +22,7 @@ The Command can BlackLists a user or a guild
 
 Credits are always welcome!
 
-- [DragoLucka](https://www.youtube.com/c/DragoLucaCodes)
+- [DragoLuca](https://www.youtube.com/c/DragoLucaCodes)
 
 ## Support
 
